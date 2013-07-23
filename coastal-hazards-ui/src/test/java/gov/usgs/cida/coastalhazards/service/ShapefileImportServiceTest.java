@@ -2,10 +2,11 @@ package gov.usgs.cida.coastalhazards.service;
 
 import static org.junit.Assert.*;
 
+import gov.usgs.cida.utilities.file.FileHelper;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileOutputStream;
-import java.nio.file.Files;
 import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
@@ -33,7 +34,7 @@ public class ShapefileImportServiceTest {
 	@Before
 	public void setup() throws Exception {
         String destinationDirectoryChild = UUID.randomUUID().toString();
-        File uploadDirectory = Files.createTempDirectory(getClass().getName()).toFile();
+        File uploadDirectory = FileHelper.createTempDir(new File(getClass().getName()));
         uploadDestinationDirectory = new File(uploadDirectory, destinationDirectoryChild);
         FileUtils.forceMkdir(uploadDestinationDirectory);
 

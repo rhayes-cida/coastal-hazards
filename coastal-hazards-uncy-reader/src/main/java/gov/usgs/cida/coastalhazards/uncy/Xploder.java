@@ -132,11 +132,15 @@ public class Xploder {
 			return true;
 		}
 
+		private static int integerCompare(int x, int y) {
+	        return (x < y) ? -1 : ((x == y) ? 0 : 1);
+		}
+		
 		@Override
 		public int compareTo(UncyKey o) {
 			int v;
 			
-			v = Integer.compare(idx, o.idx);
+			v = integerCompare(idx, o.idx);
 			if (v != 0) {
 				return v;
 			}

@@ -251,7 +251,29 @@ public class FileHelper {
         result = new File(directory).mkdirs();
         return result;
     }
+    
+    private static final int TEMP_DIR_ATTEMPTS = 10000;
+    // From guava
+    public static File createTempDir() {
+    	File baseDir = new File(System.getProperty("java.io.tmpdir"));
+    	return createTempDir(baseDir);
+    }
+    public static File createTempDir(File baseDir) {
 
+    	String baseName = "D." + System.currentTimeMillis() + "-";
+
+    	for (int counter = 0; counter < TEMP_DIR_ATTEMPTS; counter++) {
+    		File tempDir = new File(baseDir, baseName + counter);
+    		if (tempDir.mkdir()) {
+    			return tempDir;
+    		}
+    	}
+    	throw new IllegalStateException("Failed to create directory within "
+    			+ TEMP_DIR_ATTEMPTS + " attempts (tried "
+    			+ baseName + "0 to " + baseName + (TEMP_DIR_ATTEMPTS - 1) + ')');
+    }
+
+    
     /**
      * Recursively deletes a directory from the filesystem.
      *

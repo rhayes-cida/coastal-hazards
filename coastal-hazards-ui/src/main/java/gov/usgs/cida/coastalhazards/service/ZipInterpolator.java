@@ -1,6 +1,7 @@
 package gov.usgs.cida.coastalhazards.service;
 
 import gov.usgs.cida.coastalhazards.uncy.Xploder;
+import gov.usgs.cida.utilities.file.FileHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,7 +10,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -17,6 +17,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+import org.apache.commons.io.IOUtils;
 import org.geotools.data.shapefile.ShpFileType;
 import org.geotools.data.shapefile.ShpFiles;
 
@@ -30,13 +31,16 @@ public class ZipInterpolator {
 	 */
 	public File explode(File uploadDestinationFile) throws Exception {
 		// unpack
-		File tmpDir = Files.createTempDirectory("xplode").toFile();
+		File tmpDir = FileHelper.createTempDir();
 		File shpFile = unpack(tmpDir,uploadDestinationFile);
 		
 		Xploder x = new Xploder();
 		File ptFile = x.explode(shpFile.getAbsolutePath());
 		
 		File newZip = repack(tmpDir,ptFile);
+		
+		FileHelper.deleteDirRecursively(tmpDir);
+		
 		return newZip;
 	}
 
@@ -83,14 +87,7 @@ public class ZipInterpolator {
 	}
 
 	private void copy(InputStream fis, OutputStream zos) throws IOException {
-		byte[] buf = new byte[8*1024];
-		int ct = 0;
-		do {
-			ct = fis.read(buf);
-			if (ct > 0) {
-				zos.write(buf, 0, ct);
-			}
-		} while (ct > 0);
+		IOUtils.copy(fis, zos);
 	}
 
 	/**
