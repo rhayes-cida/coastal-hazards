@@ -8,14 +8,14 @@
 	<name>Coastal Hazards</name>
   
 	<modules>
+        <module>coastal-hazards-commons</module>
+        <module>coastal-hazards-uncy-reader</module>
 		<module>coastal-hazards-ui</module>
 		<module>coastal-hazards-n52</module>
 		<module>coastal-hazards-wps</module>
 		<module>coastal-hazards-geoserver</module>
 		<module>coastal-hazards-portal</module>
-		<module>coastal-hazards-commons</module>
         <module>coastal-hazards-liquibase</module>
-        <module>coastal-hazards-uncy-reader</module>
 	</modules>
   
 	<issueManagement>

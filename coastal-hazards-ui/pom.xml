@@ -23,6 +23,11 @@
 			<artifactId>coastal-hazards-commons</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+        <dependency>
+            <groupId>gov.usgs.cida.coastalhazards</groupId>
+            <artifactId>coastal-hazards-uncy-reader</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 		<dependency>
 			<groupId>it.geosolutions</groupId>
 			<artifactId>geoserver-manager</artifactId>
